@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="GET" class="row g-3">
+                    <div class="col-md-3">
+                        <label for="grade" class="form-label">年级</label>
+                        <select class="form-select" id="grade" name="grade">
+                            <option value="">全部年级</option>
+                            <option value="一年级" {% if request.args.get('grade') == '一年级' %}selected{% endif %}>一年级</option>
+                            <option value="二年级" {% if request.args.get('grade') == '二年级' %}selected{% endif %}>二年级</option>
+                            <option value="三年级" {% if request.args.get('grade') == '三年级' %}selected{% endif %}>三年级</option>
+                            <option value="四年级" {% if request.args.get('grade') == '四年级' %}selected{% endif %}>四年级</option>
+                            <option value="五年级" {% if request.args.get('grade') == '五年级' %}selected{% endif %}>五年级</option>
+                            <option value="六年级" {% if request.args.get('grade') == '六年级' %}selected{% endif %}>六年级</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label for="subject" class="form-label">学科</label>
+                        <select class="form-select" id="subject" name="subject">
+                            <option value="">全部学科</option>
+                            <option value="语文" {% if request.args.get('subject') == '语文' %}selected{% endif %}>语文</option>
+                            <option value="数学" {% if request.args.get('subject') == '数学' %}selected{% endif %}>数学</option>
+                            <option value="英语" {% if request.args.get('subject') == '英语' %}selected{% endif %}>英语</option>
+                            <option value="科学" {% if request.args.get('subject') == '科学' %}selected{% endif %}>科学</option>
+                            <option value="历史" {% if request.args.get('subject') == '历史' %}selected{% endif %}>历史</option>
+                            <option value="地理" {% if request.args.get('subject') == '地理' %}selected{% endif %}>地理</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <label for="chapter" class="form-label">章节/主题</label>
+                        <input type="text" class="form-control" id="chapter" name="chapter" 
+                               value="{{ request.args.get('chapter', '') }}" placeholder="输入关键词">
+                    </div>
+                    
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">搜索</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        {% if documents %}
+        <div class="row">
+            {% for doc in documents %}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ doc.title }}</h5>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                年级：{{ doc.grade }} | 学科：{{ doc.subject }} | 章节：{{ doc.chapter }}
+                            </small>
+                        </p>
+                        <p class="card-text">{{ doc.content[:200] }}...</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('search') }}?grade={{ doc.grade }}&subject={{ doc.subject }}&chapter={{ doc.chapter }}" 
+                               class="btn btn-outline-primary btn-sm">查看详情</a>
+                            <small class="text-muted">创建时间：{{ doc.id }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center">
+            <p class="lead">没有找到相关文档</p>
+            <a href="{{ url_for('create_document') }}" class="btn btn-primary">创建新文档</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
