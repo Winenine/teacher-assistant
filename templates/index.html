@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 mb-4">欢迎使用教师备课助手</h1>
+        <p class="lead mb-4">这是一个帮助教师管理和组织备课内容的在线平台。您可以创建、保存和搜索备课文档，让备课工作更加高效。</p>
+        
+        {% if current_user.is_authenticated %}
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">我的文档</h5>
+                        <p class="card-text">查看和管理您已创建的备课文档</p>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">进入</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">创建文档</h5>
+                        <p class="card-text">创建新的备课文档</p>
+                        <a href="{{ url_for('create_document') }}" class="btn btn-primary">创建</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">搜索文档</h5>
+                        <p class="card-text">搜索已有的备课文档</p>
+                        <a href="{{ url_for('search') }}" class="btn btn-primary">搜索</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">登录</h5>
+                        <p class="card-text">已有账号？立即登录</p>
+                        <a href="{{ url_for('login') }}" class="btn btn-primary">登录</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">注册</h5>
+                        <p class="card-text">还没有账号？立即注册</p>
+                        <a href="{{ url_for('register') }}" class="btn btn-primary">注册</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="mt-5">
+            <h3>主要功能</h3>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <h5>文档管理</h5>
+                        <p>创建、编辑和保存备课文档</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <h5>智能搜索</h5>
+                        <p>按年级、学科、章节快速查找文档</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <h5>安全存储</h5>
+                        <p>数据安全存储，随时访问</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
